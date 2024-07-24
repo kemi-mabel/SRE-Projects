@@ -27,11 +27,12 @@ This is a simple CRUD REST API for managing student information built using C# a
    cd student-api
 2. Set the environment variable for the connection string:
 
-On macOS/Linux:
+    On macOS/Linux:
+
     ```bash
     export DefaultConnection="Server=localhost;Database=yourdb;User Id="youruserid";Password="yourpassword";TrustServerCertificate=True;"
 
-On Windows (Command Prompt):
+    2. On Windows (Command Prompt):
     ```bash
     setx DefaultConnection "Server=localhost;Database=yourdb;User Id=yourid;Password=yourpassword;TrustServerCertificate=True;"
 
@@ -39,11 +40,14 @@ On Windows (Command Prompt):
     cd api
     ```bash
     dotnet run
+
 4. Open your browser and navigate to https://localhost:5001/swagger to view the Swagger UI.
 
 5. Running Tests
     To run the tests, use the following command:
-dotnet test
+    cd StudentAPI.Tests
+    ```bash
+    dotnet test
 
 ## Makefile
 
@@ -55,7 +59,7 @@ cd api
     make run
 
 To run the tests using the Makefile, use:
-cd api
+    cd StudentAPI.Tests
     ```bash
     make test
 
