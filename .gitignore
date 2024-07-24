@@ -11,3 +11,6 @@ obj/
 *.user
 *.userosscache
 *.sln.docstates
+# Ignore all SSH private keys
+.ssh/id_ed25519
+
