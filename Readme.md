@@ -65,7 +65,9 @@ You can use the provided Makefile to simplify the build and run process. Below a
 
 To Run the API Using the Makefile:
 cd api
+make build
 make run
+
 To Run the Tests Using the Makefile:
 cd StudentAPI.Tests
 make test
