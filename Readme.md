@@ -20,46 +20,59 @@ This is a simple CRUD REST API for managing student information built using C# a
 
 ### Running the API
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/student-api.git
-   cd student-api
-2. Set the environment variable for the connection string:
-
-    On macOS/Linux:
+1. **Clone the Repository**:
 
     ```bash
-    export DefaultConnection="Server=localhost;Database=yourdb;User Id="youruserid";Password="yourpassword";TrustServerCertificate=True;"
+    git clone https://github.com/yourusername/student-api.git
+    cd student-api
+    ```
 
-    2. On Windows (Command Prompt):
+2. **Set the Environment Variable for the Connection String**:
+
+    - **On macOS/Linux**:
+
+      ```bash
+      export DefaultConnection="Server=localhost;Database=yourdb;User Id=youruserid;Password=yourpassword;TrustServerCertificate=True;"
+      ```
+
+    - **On Windows**:
+
+      ```bash
+      setx DefaultConnection "Server=localhost;Database=yourdb;User Id=youruserid;Password=yourpassword;TrustServerCertificate=True;"
+      ```
+
+3. **Run the API**:
+
     ```bash
-    setx DefaultConnection "Server=localhost;Database=yourdb;User Id=yourid;Password=yourpassword;TrustServerCertificate=True;"
-
-3. Run the API:
     cd api
-    ```bash
     dotnet run
+    ```
 
-4. Open your browser and navigate to https://localhost:5001/swagger to view the Swagger UI.
+4. **View the Swagger UI**:
+   Open your browser and navigate to `https://localhost:5001/swagger` to view the Swagger UI.
 
-5. Running Tests
-    To run the tests, use the following command:
-    cd StudentAPI.Tests
-    ```bash
-    dotnet test
+### Running Tests
 
-## Makefile
+To run the tests, use the following command:
 
-You can use the provided Makefile to simplify the build and run process:
+```bash
+cd StudentAPI.Tests
+dotnet test
 
-To run the API using the Makefile, use:
+
+Makefile
+You can use the provided Makefile to simplify the build and run process. Below are the instructions for using the Makefile:
+
+To Run the API Using the Makefile:
 cd api
-    ```bash
-    make run
+make run
+To Run the Tests Using the Makefile:
+cd StudentAPI.Tests
+make test
 
-To run the tests using the Makefile, use:
-    cd StudentAPI.Tests
-    ```bash
-    make test
+## Docker
 
+### Build the Docker Image
+
+```bash
+docker build -t studentapi:1.0 .
