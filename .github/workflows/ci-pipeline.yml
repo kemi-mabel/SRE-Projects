@@ -15,33 +15,56 @@ jobs:
         dotnet-version: [ '6.0', '8.0' ]
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup dotnet ${{ matrix.dotnet-version }}
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Install dependencies (if needed)
+      - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
-      # You can test your matrix by printing the current dotnet version
-      - name: Display dotnet version
-        run: dotnet --version
+          dotnet-version: '8.0.x'
 
-      # Stage 1: Build API
+      # Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore api/
+
+      # Build the API
       - name: Build API
-        run: make build 
+        run: make build  # Assuming 'make build' builds the API
 
-      # Stage 2: Run tests
+      # Run the tests from the 'StudentAPI.Tests' folder
       - name: Run tests
-        run: make test
-
-      # Stage 3: Perform code linting
-      - name: Code linting
-        run: make lint # Ensure you have a 'lint' target in your Makefile
-
-      # Stage 4: Docker login
-      - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      # Stage 5: Docker build and push
-      - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp:latest .
+          cd StudentAPI.Tests  # Navigate to the test folder
+          make test  # Assuming 'make test' runs your tests
+
+      # Perform code linting
+      - name: Lint code
+        run: make lint  # Assuming 'make lint' performs the code linting
+
+  docker-build-and-push:
+    runs-on: self-hosted  # Use your self-hosted runner
+    needs: build-and-test  # This stage runs only if build-and-test passes
+
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Log in to DockerHub (replace with GitHub Docker registry if needed)
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Build the Docker image and push it to DockerHub
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp:latest ./api
           docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
