@@ -7,8 +7,7 @@ on:
   workflow_dispatch: # Manual trigger option
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: self-hosted
     strategy:
       matrix:
@@ -45,7 +44,7 @@ jobs:
 
   docker-build-and-push:
     runs-on: self-hosted  # Use your self-hosted runner
-    needs: build-and-test  # This stage runs only if build-and-test passes
+    needs: build-and-test 
 
     steps:
       # Checkout the code from the repository
