@@ -22,11 +22,11 @@ jobs:
 
       # Stage 1: Build API
       - name: Build API
-        run: dotnet build 
+        run: make build 
 
       # Stage 2: Run tests
       - name: Run tests
-        run: dotnet test
+        run: make test
 
       # Stage 3: Perform code linting
       - name: Code linting
