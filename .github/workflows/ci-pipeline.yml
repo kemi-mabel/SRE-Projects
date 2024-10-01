@@ -1,6 +1,10 @@
 name: CI Pipeline
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'code/**' # Trigger only when changes are made in the code directory
+  workflow_dispatch: # Manual trigger option
 
 jobs:
   build:
