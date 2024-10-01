@@ -34,9 +34,7 @@ jobs:
 
       # Run the tests from the 'StudentAPI.Tests' folder
       - name: Run tests
-        run: |
-          cd StudentAPI.Tests  # Navigate to the test folder
-          make test  # Assuming 'make test' runs your tests
+        run: make test  # Assuming 'make test' runs your tests
 
       # Perform code linting
       - name: Lint code
