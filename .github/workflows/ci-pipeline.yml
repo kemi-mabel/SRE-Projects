@@ -1,27 +1,32 @@
 name: CI Pipeline
 
-# Run the pipeline on the self-hosted runner
-on:
-  push:
-    paths:
-      - 'code/**' # Trigger only when changes are made in the code directory
-  workflow_dispatch: # Manual trigger option
+on: [push]
 
 jobs:
   build:
-    runs-on: self-hosted # Use the self-hosted runner
+
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        dotnet-version: [ '3.1.x', '6.0.x' ]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - name: Setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      # You can test your matrix by printing the current dotnet version
+      - name: Display dotnet version
+        run: dotnet --version
 
       # Stage 1: Build API
       - name: Build API
-        run: make build # Ensure you have a 'build' target in your Makefile
+        run: dotnet build 
 
       # Stage 2: Run tests
       - name: Run tests
-        run: make test # Ensure you have a 'test' target in your Makefile
+        run: dotnet test
 
       # Stage 3: Perform code linting
       - name: Code linting
